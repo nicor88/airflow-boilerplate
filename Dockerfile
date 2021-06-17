@@ -20,5 +20,3 @@ COPY --chown=airflow:airflow dags ${AIRFLOW_HOME}/dags
 COPY --chown=airflow:airflow plugins ${AIRFLOW_HOME}/plugins
 
 WORKDIR ${AIRFLOW_HOME}
-#ENTRYPOINT ["/entrypoint.sh"]
-CMD ["airflow version"]
