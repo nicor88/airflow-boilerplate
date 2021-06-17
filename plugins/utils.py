@@ -2,6 +2,7 @@ import logging
 
 logger = logging.getLogger('utils')
 
+
 def on_failure_callback(context):
     dag_id = context.get('dag_id')
     task_id = context.get('task_id')

@@ -34,7 +34,7 @@ dag = DAG(
 def print_task(**context):
     _task = context['task']
     _dag = context['dag']
-    _ti = context['ti']
+    # _ti = context['ti']
     logger.info(f'Executed from {_task.task_id} inside {_dag.dag_id}')
 
 
