@@ -1,4 +1,4 @@
-apache-airflow==2.1.0 # needed for the CI, IDE, and local development
+apache-airflow==2.1.1 # needed for the CI, IDE, and local development
 flake8==3.9.2
 isort==5.8.0
 pytest== 6.2.4

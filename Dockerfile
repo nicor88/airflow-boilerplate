@@ -1,4 +1,4 @@
-FROM apache/airflow:2.1.0-python3.8
+FROM apache/airflow:2.1.1-python3.8
 
 ARG AIRFLOW_HOME_ARG=/usr/local/airflow
 ENV AIRFLOW_HOME=${AIRFLOW_HOME_ARG}
