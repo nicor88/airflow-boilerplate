@@ -1,0 +1,75 @@
+version: "3.8"
+x-airflow-common:
+  environment:
+    &airflow-common-env
+    AIRFLOW__CORE__FERNET_KEY: ''
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+    AIRFLOW__CORE__LOAD_EXAMPLES: 'true'
+    STAGE: dev
+
+services:
+  postgres:
+    image: postgres:13.3-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "airflow"]
+      interval: 5s
+      retries: 5
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  webserver:
+    image: airflow-local:latest
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: bash -c "airflow db init && airflow webserver"
+    volumes:
+      - ./dags:/usr/local/airflow/dags
+      - ./plugins:/usr/local/airflow/plugins
+    ports:
+      - 8080:8080
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    environment:
+      <<: *airflow-common-env
+
+  scheduler:
+    image: airflow-local:latest
+    depends_on:
+      postgres:
+        condition: service_healthy
+      webserver:
+        condition: service_healthy
+    command: |
+      airflow scheduler
+    volumes:
+      - ./dags:/usr/local/airflow/dags
+      - ./plugins:/usr/local/airflow/plugins
+    environment:
+      <<: *airflow-common-env
+
+  init:
+    image: airflow-local:latest
+    command: airflow users create --username airflow --password airflow --firstname admin --lastname admin --role Admin --email airflow@admin.org
+    depends_on:
+      postgres:
+        condition: service_healthy
+      webserver:
+        condition: service_healthy
+    environment:
+      <<: *airflow-common-env
