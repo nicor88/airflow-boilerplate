@@ -29,13 +29,15 @@ make airflow-down
 ### Setup local environment
 When interacting with the codebase from your IDE or editor of your choice, it's helpful to have
 airflow installed locally.
-Run `make init-local`. The command will setup a virtual environment, and install all the libraries
+Run `make init-venv`. The command will setup a virtual environment, and install all the libraries
 needed to work with the codebase.
 
 ### Linting
 To lint the code base use the command `make lint`, the linting is based on flake8.
 
 ### Unit tests
+Before being able the unit test locally, you need to run `make init-local`, that will create
+the artifacts to run airflow locally (e.g. setting up a DB based on SQLite).
 To run unit tests use the command `make run-tests`, this will use pytest to run the test suits.
 
 ### Fix imports order

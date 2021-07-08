@@ -1,0 +1,7 @@
+source .local/.env
+
+echo "Your AIRFLOW_HOME is $AIRFLOW_HOME"
+
+# overwrite variables when initializing
+
+airflow db init
