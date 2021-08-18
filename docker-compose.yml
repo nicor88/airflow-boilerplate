@@ -42,9 +42,9 @@ services:
       - 8080:8080
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
-      interval: 10s
-      timeout: 10s
-      retries: 5
+      interval: 15s
+      timeout: 15s
+      retries: 10
     environment:
       <<: *airflow-common-env
 
