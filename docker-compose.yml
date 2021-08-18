@@ -44,7 +44,7 @@ services:
       test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
       interval: 15s
       timeout: 15s
-      retries: 10
+      retries: 6
     environment:
       <<: *airflow-common-env
 
