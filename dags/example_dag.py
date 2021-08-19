@@ -13,7 +13,7 @@ from plugins.utils import on_failure_callback
 logger = logging.getLogger('example_dag')
 
 default_args = {
-    'owner': 'BI',
+    'owner': 'nicor88',
     'depends_on_past': False,
     'start_date': datetime.datetime(2021, 6, 9),
     'retries': 0,
